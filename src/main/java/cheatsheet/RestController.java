@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@org.springframework.web.bind.annotation.RestController
+@org.springframework.web.bind.annotation.RestController()
 public class RestController {
 
     DataRepository dataRepository;
@@ -15,18 +15,18 @@ public class RestController {
         this.dataRepository = dataRepository;
     }
 
-    @GetMapping("")
+    @GetMapping("/rest")
     public List<Data> getAllCommands() {
         return dataRepository.findAll();
     }
 
-    @GetMapping("/{language}")
+    @GetMapping("/rest/{language}")
     public List<Data> getLanguageCommands(@PathVariable String language) {
         System.out.println(language);
         return dataRepository.findDataByLanguage(language);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/rest/{id}")
     public Data deleteData(@PathVariable String id) {
         Optional<Data> dataOptional = dataRepository.findById(UUID.fromString(id));
         if (dataOptional.isPresent()) {
@@ -37,7 +37,7 @@ public class RestController {
         return new Data();
     }
 
-    @PostMapping("/add")
+    @PostMapping("/rest/add")
     public Data addData(@RequestBody Data data) {
         dataRepository.save(data);
         return data;
